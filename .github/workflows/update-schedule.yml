@@ -3,8 +3,11 @@ name: Update Movie Schedule
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight
-  workflow_dispatch:      # Allow manual trigger
+    - cron: '1 0 * * *'  # Run 1 minute past midnight
+  push:
+    branches:
+      - main
+  workflow_dispatch:     # Allow manual trigger
 
 jobs:
   update:
