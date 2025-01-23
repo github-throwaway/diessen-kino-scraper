@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Kinoprogramm Dießen</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #f4f4f6;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding: 1em;
+        }
+
+        .container {
+            background: white;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .calendar-btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 15px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            margin-top: 1em;
+            transition: background-color 0.3s ease;
+            max-width: 100%;
+        }
+
+        .calendar-btn i {
+            margin-right: 5px;
+        }
+
+        .calendar-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .last-updated {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 1em;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1em;
+            }
+
+            .calendar-btn {
+                padding: 12px 24px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🎬 Kinoprogramm Dießen</h1>
+
+    <a href="movies.ics" class="calendar-btn">
+        <i class="fas fa-calendar-plus"></i> Kalender abonnieren
+    </a>
+
+    <div class="last-updated">
+        Zuletzt aktualisiert: {{LAST_UPDATED}}
+    </div>
+</div>
+</body>
+</html>
