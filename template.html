@@ -17,28 +17,21 @@
     </a>
 
     <div class="last-updated">
-        Zuletzt aktualisiert: <span id="last-updated">{{LAST_UPDATED}}</span>
+        Zuletzt aktualisiert: {{LAST_UPDATED}}
     </div>
 </div>
 
 <script>
-    // Function to format the current date and time
-    function formatDate(date) {
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${day}.${month}.${year} ${hours}:${minutes}`;
-    }
-
-    // Update the "last updated" timestamp
-    document.getElementById('last-updated').textContent = formatDate(new Date());
-
     // Dynamically generate the webcal URI
     const currentUrl = window.location.href;
-    const baseUrl = currentUrl.endsWith('/') ? currentUrl.slice(0, -1) : currentUrl; // Remove trailing slash if present
-    const webcalUrl = 'webcal:' + baseUrl + '/movies.ics';
+
+    // Remove "https://" or "http://" from the current URL
+    const baseUrl = currentUrl
+        .replace(/^https?:\/\//, '') // Remove "http://" or "https://"
+        .replace(/\/$/, ''); // Remove trailing slash if present
+
+    // Construct the webcal URI
+    const webcalUrl = 'webcal://' + baseUrl + '/movies.ics';
 
     // Set the href attribute of the calendar link
     document.getElementById('calendar-link').href = webcalUrl;
