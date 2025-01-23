@@ -208,7 +208,7 @@ class MovieScraper:
             raise
 
     def create_html_page(self):
-        with open('docs/index_template.html', 'r',
+        with open('docs/index.html', 'r',
                   encoding='utf-8') as template_file:
             html = template_file.read()
 
