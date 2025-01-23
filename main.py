@@ -120,15 +120,7 @@ class MovieScraper:
             return details
         except Exception as e:
             logging.error(f"Error fetching movie details for {url}: {e}")
-            return {
-                'duration': 0,  # Default duration in case of error
-                'description': '',
-                'trailer': '',
-                'cast': '',
-                'director': '',
-                'fsk': '',
-                'room': ''
-            }
+            raise
 
     def scrape_movies(self):
         try:
@@ -144,7 +136,7 @@ class MovieScraper:
             table = soup.find('table', class_='table-text')
             if not table:
                 logging.error("No movie table found")
-                return None
+                raise
 
             dates = []
             for th in table.find('thead').find_all('th')[1:]:
@@ -213,9 +205,10 @@ class MovieScraper:
             self.create_html_page()
         except Exception as e:
             logging.error(f"Error saving calendar: {e}")
+            raise
 
     def create_html_page(self):
-        with open('templates/index_template.html', 'r',
+        with open('docs/index_template.html', 'r',
                   encoding='utf-8') as template_file:
             html = template_file.read()
 
