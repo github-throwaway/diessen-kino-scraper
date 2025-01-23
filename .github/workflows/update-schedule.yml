@@ -1,4 +1,3 @@
-# .github/workflows/update-schedule.yml
 name: Update Movie Schedule
 
 on:
@@ -28,6 +27,12 @@ jobs:
 
     - name: Run scraper
       run: python main.py
+
+    - name: Copy files to docs directory
+      run: |
+        mkdir -p docs/css
+        cp css/styles.css docs/css/
+        cp template.html docs/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
