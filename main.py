@@ -208,17 +208,25 @@ class MovieScraper:
             raise
 
     def create_html_page(self):
-        with open('docs/index.html', 'r',
-                  encoding='utf-8') as template_file:
-            html = template_file.read()
+        try:
+            # Read the template file
+            with open('template.html', 'r', encoding='utf-8') as template_file:
+                template_content = template_file.read()
 
-        # Optional: If you want to inject dynamic content
-        html = html.replace('{{LAST_UPDATED}}',
-                            datetime.now().strftime('%d.%m.%Y %H:%M'))
+            # Replace the placeholder with the current timestamp
+            updated_html = template_content.replace(
+                '{{LAST_UPDATED}}',
+                datetime.now().strftime('%d.%m.%Y %H:%M')
+            )
 
-        with open('docs/index.html', 'w', encoding='utf-8') as f:
-            f.write(html)
+            # Write the updated content to index.html
+            with open('docs/index.html', 'w', encoding='utf-8') as output_file:
+                output_file.write(updated_html)
 
+            logging.info("HTML page updated successfully")
+        except Exception as e:
+            logging.error(f"Error creating HTML page: {e}")
+            raise
 
 if __name__ == "__main__":
     scraper = MovieScraper()
