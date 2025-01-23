@@ -6,6 +6,7 @@ import time
 from datetime import datetime, timedelta
 from typing import Dict, Optional
 from urllib.parse import urljoin
+from zoneinfo import ZoneInfo
 
 import aiohttp
 from bs4 import BeautifulSoup
@@ -236,9 +237,10 @@ class FastMovieScraper:
         try:
             with open("template.html", "r", encoding="utf-8") as template_file:
                 template_content = template_file.read()
+                berlin_tz = ZoneInfo("Europe/Berlin")
 
             updated_html = template_content.replace(
-                "{{LAST_UPDATED}}", datetime.now().strftime("%d.%m.%Y %H:%M")
+                "{{LAST_UPDATED}}", datetime.now(berlin_tz).strftime("%d.%m.%Y %H:%M")
             )
 
             with open("docs/index.html", "w", encoding="utf-8") as output_file:
