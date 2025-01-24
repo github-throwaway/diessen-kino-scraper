@@ -2,34 +2,47 @@ name: Update Movie Schedule
 
 on:
   schedule:
-    - cron: '1 0 * * *'  # Run 1 minute past midnight
+    - cron: '1 23 * * *'
+
   push:
     branches:
       - main
-  workflow_dispatch:     # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Berlin  # Ensure German timezone for any time-dependent operations
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt --cache-dir ~/.cache/pip
 
-      - name: Copy files to docs directory
+      - name: Prepare docs
         run: |
           mkdir -p docs/css
-          cp css/styles.css docs/css/
-          cp template.html docs/index.html
+          rsync -a css/styles.css docs/css/
+          rsync -a template.html docs/index.html
 
       - name: Run scraper
         run: python main.py
@@ -40,3 +53,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           force_orphan: true
+          full_commit_message: Update from GitHub Actions
