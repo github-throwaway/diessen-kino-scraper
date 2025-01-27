@@ -1,4 +1,3 @@
-/* styles.css */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -27,6 +26,7 @@ body {
 }
 
 .container {
+    display: inline-block;
     background: white;
     padding: 2em;
     border-radius: 10px;
@@ -36,40 +36,13 @@ body {
     text-align: center;
 }
 
-.calendar-btn {
+add-to-calendar-button {
     display: inline-block;
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 15px 15px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.2em;
-    margin-top: 1em;
-    transition: background-color 0.3s ease;
-    max-width: 100%;
-}
-
-.calendar-btn i {
-    margin-right: 5px;
-}
-
-.calendar-btn:hover {
-    background-color: #2980b9;
+    margin: 1em auto; /* Centers the button vertically in the container */
 }
 
 .last-updated {
     color: #7f8c8d;
     font-size: 0.9em;
     margin-top: 1em;
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 1em;
-    }
-
-    .calendar-btn {
-        padding: 12px 24px;
-        font-size: 1em;
-    }
 }

@@ -4,37 +4,29 @@
     <title>Kinoprogramm Dießen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@2" async defer></script>
 </head>
 <body>
 <div class="container">
     <h1>🎬 Kinoprogramm Dießen</h1>
-
-    <!-- Link with a placeholder href -->
-    <a id="calendar-link" href="movies.ics" class="calendar-btn">
-        <i class="fas fa-calendar-plus"></i> Kalender abonnieren
-    </a>
+    <add-to-calendar-button
+            name="Kino Dießen"
+            icsFile="https://github-throwaway.github.io/diessen-kino-scraper/movies.ics"
+            subscribe
+            options="'Apple','Google','Outlook.com','Yahoo','MicrosoftTeams','Microsoft365'"
+            hideBackground
+            hideCheckmark
+            label="Kalender abonnieren"
+            language="de"
+            size="10"
+            styleLight="--btn-background: #3498db; --btn-text: #fff; --font: Arial, sans-serif;"
+            styleDark="--btn-background: #2980b9;"
+    ></add-to-calendar-button>
 
     <div class="last-updated">
         Zuletzt aktualisiert: {{LAST_UPDATED}}
     </div>
 </div>
-
-<script>
-    // Dynamically generate the webcal URI
-    const currentUrl = window.location.href;
-
-    // Remove "https://" or "http://" from the current URL
-    const baseUrl = currentUrl
-        .replace(/^https?:\/\//, '') // Remove "http://" or "https://"
-        .replace(/\/$/, ''); // Remove trailing slash if present
-
-    // Construct the webcal URI
-    const webcalUrl = 'webcal://' + baseUrl + '/movies.ics';
-
-    // Set the href attribute of the calendar link
-    document.getElementById('calendar-link').href = webcalUrl;
-</script>
 </body>
 </html>
