@@ -1,4 +1,3 @@
-/* styles.css */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,12 +10,12 @@
     --background-color: #f4f4f6;
 }
 
-html, body {
-    height: 100%;
+body, html {
+    height: 100%
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +38,7 @@ body {
 .calendar-btn {
     display: inline-block;
     background-color: var(--secondary-color);
-    color: white;
+    color: #fff;
     padding: 15px 15px;
     text-decoration: none;
     border-radius: 8px;
@@ -59,7 +58,7 @@ body {
 
 .last-updated {
     color: #7f8c8d;
-    font-size: 0.9em;
+    font-size: .9em;
     margin-top: 1em;
 }
 
@@ -72,4 +71,59 @@ body {
         padding: 12px 24px;
         font-size: 1em;
     }
+}
+
+.url-copy-container {
+    display: flex;
+    margin: 1rem 0;
+    max-width: 600px;
+}
+
+#ics-url {
+    flex: 1;
+    padding: .5rem;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    font-family: monospace;
+    font-size: .9rem;
+    background: #fff;
+}
+
+#copy-btn {
+    padding: .5rem 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+#copy-btn:hover {
+    background-color: #e9ecef;
+}
+
+#copy-btn:active {
+    background-color: #dee2e6;
+}
+
+.copy-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, .8);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: .9rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+    z-index: 1000;
+}
+
+.copy-notification.show {
+    opacity: 1;
+    visibility: visible;
 }

@@ -15,6 +15,17 @@
         <i class="fas fa-calendar-plus"></i> Kalender abonnieren
     </a>
 
+    <div class="url-copy-container">
+        <input type="text" id="ics-url" readonly>
+        <button id="copy-btn">
+            <i class="fas fa-copy"></i>
+        </button>
+    </div>
+
+    <div class="copy-notification" id="copy-notification">
+        Link in Zwischenablage kopiert!
+    </div>
+
     <div class="last-updated">
         Zuletzt aktualisiert: {{LAST_UPDATED}}
     </div>
@@ -26,26 +37,53 @@
         return /Android/i.test(navigator.userAgent);
     }
 
-    // Get the calendar link element
-    const calendarLink = document.getElementById('calendar-link');
-
-    // Get the current URL
-    const currentUrl = window.location.href;
-
-    // Remove "https://" or "http://" and trailing slash from the current URL
-    const baseUrl = currentUrl
-        .replace(/^https?:\/\//, '')
-        .replace(/\/$/, '');
-
-    if (isAndroid()) {
-        // For Android, use Google Calendar URL
-        const googleCalUrl = 'https://calendar.google.com/calendar/u/0/r?cid=webcal://' + baseUrl + '/movies.ics';
-        calendarLink.href = googleCalUrl;
-    } else {
-        // For iOS/Mac, use webcal protocol
-            const webcalUrl = 'webcal://' + baseUrl + '/movies.ics';
-        calendarLink.href = webcalUrl;
+    // Function to get base URL from the current page
+    function getBaseUrl() {
+        const currentUrl = window.location.href;
+        return currentUrl
+            .replace(/^https?:\/\//, '') // Remove 'https://' or 'http://'
+            .replace(/\/$/, '');          // Remove trailing slash
     }
+
+    // Function to generate the ICS URL
+    function getIcsUrl(baseUrl) {
+        return 'https://' + baseUrl + '/movies.ics';
+    }
+
+    // Function to generate the calendar link based on platform
+    function getCalendarLink(baseUrl) {
+        const calendarUrl = baseUrl + '/movies.ics';
+        if (isAndroid()) {
+            // For Android, use Google Calendar URL
+                    return 'https://calendar.google.com/calendar/u/0/r?cid=webcal://' + calendarUrl;
+        } else {
+            // For iOS/Mac, use webcal protocol
+            return 'webcal://' + calendarUrl;
+        }
+    }
+
+    // Get the base URL
+    const baseUrl = getBaseUrl();
+
+    // Set ICS URL in the input field
+    document.getElementById('ics-url').value = getIcsUrl(baseUrl);
+
+    // Get the calendar link element and update the href
+    const calendarLink = document.getElementById('calendar-link');
+    calendarLink.href = getCalendarLink(baseUrl);
+
+    // Copy to clipboard functionality
+    document.getElementById('copy-btn').addEventListener('click', function () {
+        const input = document.getElementById('ics-url');
+        input.select();
+        navigator.clipboard.writeText(input.value)
+            .then(() => {
+                const notification = document.getElementById('copy-notification');
+                notification.classList.add('show');
+                setTimeout(() => notification.classList.remove('show'), 2000);
+            })
+            .catch(err => console.error('Fehler beim Kopieren:', err));
+    });
 </script>
 </body>
 </html>
