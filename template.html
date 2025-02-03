@@ -14,7 +14,9 @@
     <a id="calendar-link" href="movies.ics" class="calendar-btn">
         <i class="fas fa-calendar-plus"></i> Kalender abonnieren
     </a>
-
+    <br>
+    <br>
+    <div><h5>Link für manuellen Import</h5></div>
     <div class="url-copy-container">
         <input type="text" id="ics-url" readonly>
         <button id="copy-btn">
@@ -30,6 +32,7 @@
         Zuletzt aktualisiert: {{LAST_UPDATED}}
     </div>
 </div>
+
 
 <script>
     // Function to detect Android
@@ -55,7 +58,7 @@
         const calendarUrl = baseUrl + '/movies.ics';
         if (isAndroid()) {
             // For Android, use Google Calendar URL
-                    return 'https://calendar.google.com/calendar/u/0/r?cid=webcal://' + calendarUrl;
+            return 'https://calendar.google.com/calendar/u/0/r?cid=webcal://' + calendarUrl;
         } else {
             // For iOS/Mac, use webcal protocol
             return 'webcal://' + calendarUrl;
