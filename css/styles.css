@@ -52,10 +52,6 @@ body {
     margin-right: 5px;
 }
 
-.calendar-btn:hover {
-    background-color: #2980b9;
-}
-
 .last-updated {
     color: #7f8c8d;
     font-size: .9em;
