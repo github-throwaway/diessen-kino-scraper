@@ -14,15 +14,6 @@
     <a id="calendar-link" href="movies.ics" class="calendar-btn">
         <i class="fas fa-calendar-plus"></i> Kalender abonnieren
     </a>
-    <br>
-    <br>
-    <div><h5>Link für manuellen Import</h5></div>
-    <div class="url-copy-container">
-        <input type="text" id="ics-url" readonly>
-        <button id="copy-btn">
-            <i class="fas fa-copy"></i>
-        </button>
-    </div>
 
     <div class="copy-notification" id="copy-notification">
         Link in Zwischenablage kopiert!
@@ -31,8 +22,63 @@
     <div class="last-updated">
         Zuletzt aktualisiert: {{LAST_UPDATED}}
     </div>
-</div>
+    <hr>
+    <details class="manual-subscribe-instructions">
+        <summary>Manueller Import</summary>
 
+        <div class="url-copy-container">
+            <input type="text" id="ics-url" readonly>
+            <button id="copy-btn">
+                <i class="fas fa-copy"></i>
+            </button>
+        </div>
+
+        <div class="instructions-content">
+            <!-- iOS Instructions -->
+            <div class="instruction-heading">
+                <i class="fa-brands fa-apple"></i>
+                <span><a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios">iOS:</a></span>
+            </div>
+            <ol>
+                <li>Öffne die App „Kalender“ auf deinem iPhone.</li>
+
+                <li>Tippe unten auf dem Bildschirm auf „Kalender“ und dann auf „Hinzufügen“.</li>
+                <li>
+                    <i>Externen, schreibgeschützten Kalender abonnieren:</i> Tippe auf „Kalenderabonnement hinzufügen“,
+                    gib die URL
+                    der .ics-Datei, die du abonnieren möchtest, (sowie alle darüber hinaus erforderlichen Serverdaten)
+                    ein
+                    und wähle „Abonnieren“.
+                </li>
+                <a href="https://support.google.com/calendar/answer/37100?hl=de" target="_blank" rel="noopener">
+                    <i class="fas fa-arrow-up-right-from-square"></i>
+                    Dokumentation
+                </a>
+            </ol>
+            <hr>
+
+            <!-- Android Instructions -->
+            <div class="instruction-heading">
+                <i class="fa-brands fa-android"></i>
+                <span>Android:</span>
+            </div>
+            <ol>
+                <li>Öffnen Sie auf einem Computer Google Kalender.</li>
+                <li>Klicken Sie links neben „Weitere Kalender“ auf „Weitere Kalender hinzufügen“ Weitere Kalender
+                    hinzufügen und dann Per URL.
+                </li>
+                <li>Geben Sie die URL des veröffentlichten Kalenders ein.</li>
+                <li>Klicken Sie auf Kalender hinzufügen.</li>
+                <li>Der Kalender wird links unter „Weitere Kalender“ angezeigt.</li>
+                <a href="https://support.google.com/calendar/answer/37100?hl=de" target="_blank" rel="noopener">
+                    <i class="fas fa-arrow-up-right-from-square"></i>
+                    Dokumentation
+                </a>
+
+            </ol>
+        </div>
+    </details>
+</div>
 
 <script>
     // Function to detect Android
@@ -44,8 +90,8 @@
     function getBaseUrl() {
         const currentUrl = window.location.href;
         return currentUrl
-            .replace(/^https?:\/\//, '') // Remove 'https://' or 'http://'
-            .replace(/\/$/, '');          // Remove trailing slash
+            .replace(/^https?:\/\//, '')
+            .replace(/\/$/, '');
     }
 
     // Function to generate the ICS URL
@@ -56,30 +102,21 @@
     // Function to generate the calendar link based on platform
     function getCalendarLink(baseUrl) {
         const calendarUrl = baseUrl + '/movies.ics';
-        if (isAndroid()) {
-            // For Android, use Google Calendar URL
-            return 'https://calendar.google.com/calendar/u/0/r?cid=webcal://' + calendarUrl;
-        } else {
-            // For iOS/Mac, use webcal protocol
-            return 'webcal://' + calendarUrl;
-        }
+        return isAndroid()
+            ? 'https://calendar.google.com/calendar/u/0/r?cid=webcal://' + calendarUrl
+            : 'webcal://' + calendarUrl;
     }
 
-    // Get the base URL
+    // Initialize base URL
     const baseUrl = getBaseUrl();
 
-    // Set ICS URL in the input field
+    // Set ICS URL and calendar link
     document.getElementById('ics-url').value = getIcsUrl(baseUrl);
-
-    // Get the calendar link element and update the href
-    const calendarLink = document.getElementById('calendar-link');
-    calendarLink.href = getCalendarLink(baseUrl);
+    document.getElementById('calendar-link').href = getCalendarLink(baseUrl);
 
     // Copy to clipboard functionality
-    document.getElementById('copy-btn').addEventListener('click', function () {
-        const input = document.getElementById('ics-url');
-        input.select();
-        navigator.clipboard.writeText(input.value)
+    document.getElementById('copy-btn').addEventListener('click', () => {
+        navigator.clipboard.writeText(document.getElementById('ics-url').value)
             .then(() => {
                 const notification = document.getElementById('copy-notification');
                 notification.classList.add('show');
