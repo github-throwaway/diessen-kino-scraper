@@ -11,7 +11,8 @@
 }
 
 body, html {
-    height: 100%
+    min-height: 100vh;
+    overflow-y: auto;
 }
 
 body {
@@ -186,5 +187,4 @@ hr {
 .instruction-heading span {
     font-weight: bold;
     text-align: left;
-
 }
