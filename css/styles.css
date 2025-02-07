@@ -93,6 +93,7 @@ body {
     border-radius: 0 4px 4px 0;
     cursor: pointer;
     transition: background-color .2s;
+    -webkit-appearance: none;
 }
 
 #copy-btn:hover {
@@ -128,7 +129,7 @@ body {
     margin-top: 1rem;
     border: .5px solid #ccc;
     border-radius: 4px;
-    padding: 0.1rem;
+    padding: 2em;
 }
 
 .manual-subscribe-instructions summary {
